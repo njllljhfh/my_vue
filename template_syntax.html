@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>模板语法</title>
+  <script src="vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+  <div id="app1">
+    <p>Using mustaches: {{ rawHtml }}</p>
+    <!--v-html="rawHtml" 必须放到一个标签中-->
+    <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+    <p v-html="rawHtml"></p>
+    <div v-bind:class="color">test...</div>
+    <p>{{num+1}}</p>
+    <p>{{num>1 ? 'Yes' : 'No'}}</p>
+    <p>{{ message.split('').reverse().join('') }}</p>
+    <div v-bind:id="'list-' + id">{{ id }}</div>
+    <p v-if="seen">现在你看到我了</p>
+    <!-- ":" 是v-bind的简写-->
+    <a :href="url">...</a>
+    <p>
+      <!-- 动态绑定html属性的缩写 (2.6.0+) -->
+      <a :[my_site]="hao123">hao123</a>
+    </p>
+    <!-- "@" 是v-on的简写-->
+    <div @click="click1">
+      <!--只执行click2-->
+      <div @click.stop="click2">
+        click me
+      </div>
+    </div>
+    <!-- 动态绑定事件的缩写 (2.6.0+) -->
+    <a @[event_name]="print_xxx"> xxx </a>
+  </div>
+
+  <script>
+    var app1 = new Vue({
+      el: '#app1',
+      data: {
+        rawHtml: '<span style="color:#ff0000">This should be red.</span>',
+        color: 'blue', // style中的样式
+        num: 1,
+        message: 'Vue',
+        id: "666",
+        seen: true,
+        url: 'https://cn.vuejs.org/',
+        hao123: 'https://www.hao123.com/',
+        event_name: 'click',
+        my_site: 'href',
+      },
+      methods: {
+        click1: function () {
+          console.log('click1......')
+        },
+        click2: function () {
+          console.log('click2......')
+        },
+        print_xxx: function () {
+          console.log('xxxxxxxxxxxxxxxx')
+        }
+      }
+    })
+  </script>
+
+  <style>
+    /*.red 是类选择器*/
+    .red {
+      color: red;
+    }
+
+    .blue {
+      color: blue;
+      font-size: 100px;
+    }
+  </style>
+</body>
+</html>

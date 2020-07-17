@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      official_website="https://cn.vuejs.org/v2/guide/instance.html#%E5%AE%9E%E4%BE%8B%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%92%A9%E5%AD%90">
+<head>
+  <meta charset="UTF-8">
+  <title>实例生命周期钩子</title>
+  <script src="vue.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+  <div id="app1">
+    {{ $data.a }}
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app1',
+      data: {
+        a: 1
+      },
+      // created 钩子可以用来在一个实例被创建之后执行代码
+      created: function () {
+        // `this` 指向 vm 实例
+        console.log('a is: ' + this.a)
+      }
+    })
+    // => "a is: 1"
+  </script>
+</body>
+</html>
