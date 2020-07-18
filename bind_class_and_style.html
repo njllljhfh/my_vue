@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" official_website="https://cn.vuejs.org/v2/guide/class-and-style.html">
+<head>
+  <meta charset="UTF-8">
+  <title>Class 与 Style 绑定</title>
+  <script src="vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+  <div id="app"
+       class="test"
+       v-bind:class="{ active: isActive , green: isGreen}"
+       style="width: 200px; height: 200px; text-align: center; line-height: 200px">
+    hi vue
+  </div>
+
+  <br>
+
+  <div id="app1"
+       class="test"
+       v-bind:class="[isActive ? 'active' : '', 'green']"
+       style="width: 200px; height: 200px; text-align: center; line-height: 200px">
+    hi llj
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        isActive: true,
+        isGreen: true,
+      }
+    })
+
+    var vm1 = new Vue({
+      el: '#app1',
+      data: {
+        isActive: true,
+        isGreen: false,
+      }
+    })
+  </script>
+
+  <style>
+    .test {
+      font-size: 30px;
+    }
+
+    .active {
+      background: #FF0000;
+    }
+
+    .green {
+      color: #00FF00;
+    }
+  </style>
+
+</body>
+</html>
