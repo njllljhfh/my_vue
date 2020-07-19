@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" official_website="https://cn.vuejs.org/v2/guide/forms.html">
+<head>
+  <meta charset="UTF-8">
+  <title>表单输入绑定</title>
+  <script src="vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+  <div id="example-1">
+    <!--文本-->
+    <input v-model="message" placeholder="edit me">
+    <p>Message is: {{ message }}</p>
+    <hr>
+
+    <!--多行文本-->
+    <span>Multiline message is:</span>
+    <p style="white-space: pre-line;">{{ message2 }}</p>
+    <br>
+    <textarea v-model="message2" placeholder="add multiple lines"></textarea>
+    <br>
+
+    <!--单个复选框，绑定到布尔值：-->
+    <input type="checkbox" id="checkbox" v-model="checked">
+    <label for="checkbox">{{ checked }}</label>
+    <hr>
+
+    <!--多个复选框，绑定到同一个数组：-->
+    <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+    <label for="jack">Jack</label>
+    <input type="checkbox" id="john" value="John" v-model="checkedNames">
+    <label for="john">John</label>
+    <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+    <label for="mike">Mike</label>
+    <br>
+    <span>Checked names: {{ checkedNames }}</span>
+    <hr>
+
+    <!--&lt;!&ndash;多个复选框，绑定到同一个数组：&ndash;&gt;-->
+    <!--<template v-for="name in ['jack','john','mike']">-->
+    <!--  <input type="checkbox" :id="name" :value="upFirst(name)" v-model="checkedNames">-->
+    <!--  <label :for="name">{{upFirst(name)}}</label>-->
+    <!--</template>-->
+    <!--<br>-->
+    <!--<span>Checked names: {{ checkedNames }}</span>-->
+    <!--<hr>-->
+
+
+  </div>
+
+
+</body>
+
+<script>
+  new Vue({
+    el: '#example-1',
+    data: {
+      message: '',
+      message2: '',
+      checked: false,
+      checkedNames: [],
+    },
+    methods: {
+      upFirst: function (str) {
+        return str.slice(0, 1).toUpperCase() + str.slice(1)
+      }
+    }
+  })
+</script>
+</html>
