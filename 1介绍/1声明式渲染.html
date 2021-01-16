@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>声明式渲染</title>
+  <script src="../vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+  <a href="https://cn.vuejs.org/v2/guide/index.html#%E5%A3%B0%E6%98%8E%E5%BC%8F%E6%B8%B2%E6%9F%93">声明式渲染</a>
+  <hr/>
+
+  <div>
+    <p>Vue.js 的核心是一个允许采用简洁的模板语法来声明式地将数据渲染进 DOM 的系统：</p>
+
+    <div id="app">
+      {{ message }}
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello Vue!'
+        }
+      })
+    </script>
+  </div>
+  <hr/>
+
+
+  <div>
+    <p>除了文本插值，我们还可以像这样来绑定元素 attribute：</p>
+
+    <div id="app-2">
+      <span v-bind:title="message">
+        鼠标悬停几秒钟查看此处动态绑定的提示信息！
+      </span>
+    </div>
+
+    <script>
+      var app2 = new Vue({
+        el: '#app-2',
+        data: {
+          message: '页面加载于 ' + new Date().toLocaleString()
+        }
+      })
+    </script>
+  </div>
+  <hr/>
+
+</body>
+</html>
