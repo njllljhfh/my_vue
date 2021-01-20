@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件处理</title>
+  <script src="../../vue.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="../../style_sheet/my_style.css">
+</head>
+<body>
+  <a href="https://cn.vuejs.org/v2/guide/events.html">事件处理</a>
+  <hr/>
+
+
+  <div>
+    <h2>监听事件</h2>
+    <p>可以用 v-on 指令监听 DOM 事件，并在触发时运行一些 JavaScript 代码。</p>
+
+    <h3>实例</h3>
+    <div id="app1">
+      <button v-on:click="counter += 1">Add 1</button>
+      <p>The button above has been clicked {{ counter }} times.</p>
+    </div>
+
+    <script>
+      var app1 = new Vue({
+        el: '#app1',
+        data: {
+          counter: 0
+        }
+      })
+    </script>
+  </div>
+  <hr/>
+
+
+  <div>
+    <h2>事件处理方法</h2>
+    <p>
+      然而许多事件处理逻辑会更为复杂，
+      所以直接把 JavaScript 代码写在 v-on 指令中是不可行的。
+      因此 v-on 还可以接收一个需要调用的方法名称。
+    </p>
+    <p>实例</p>
+
+    <div id="app2">
+      <!-- `greet` 是在下面定义的方法名 -->
+      <button @click="greet">Greet</button>
+    </div>
+
+    <script>
+      var app2 = new Vue({
+        el: '#app2',
+        data: {
+          name: 'Vue.js'
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+          greet: function (event) {
+            // `this` 在方法里指向当前 Vue 实例
+            alert('Hello ' + this.name + '!');
+            // `event` 是原生 DOM 事件
+            if (event) {
+              alert(event.target.tagName)
+            }
+          }
+        }
+      });
+
+      // 也可以用 JavaScript 直接调用方法
+      // 直接调用，greet方法中的 event 变量是 undefined.
+      // app2.greet() // => 'Hello Vue.js!'
+    </script>
+  </div>
+  <hr/>
+
+
+  <div>
+    <h2>内联处理器中的方法</h2>
+    <p>除了直接绑定到一个方法，也可以在内联 JavaScript 语句中调用方法：</p>
+
+    <h3>实例</h3>
+    <div id="app3">
+      <button v-on:click="say('hi')">Say hi</button>
+      <button v-on:click="say('what')">Say what</button>
+    </div>
+
+    <script>
+      new Vue({
+        el: '#app3',
+        methods: {
+          say: function (message) {
+            alert(message)
+          }
+        }
+      })
+    </script>
+    <br/><br/>
+
+
+    <p>有时也需要在内联语句处理器中访问原始的 DOM 事件。可以用特殊变量 <code>$event</code> 把它传入方法：</p>
+    <div id="app4">
+      <button v-on:click="warn('Form cannot be submitted yet.', $event)">
+        Submit
+      </button>
+    </div>
+    <script>
+      new Vue({
+        el: "#app4",
+        methods: {
+          warn: function (message, event) {
+            // 现在我们可以访问原生事件对象
+            if (event) {
+              // preventDefault() 方法 "https://www.w3school.com.cn/jsref/event_preventdefault.asp"
+              event.preventDefault()
+            }
+            alert(message)
+          }
+        }
+      })
+    </script>
+  </div>
+  <hr/>
+
+
+  <div>
+    <h2>事件修饰符</h2>
+    <p>
+      在事件处理程序中调用 event.preventDefault() 或 event.stopPropagation() 是非常常见的需求。
+      尽管我们可以在方法中轻松实现这点，但更好的方式是：方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节。
+    </p>
+    <p>为了解决这个问题，Vue.js 为 v-on 提供了事件修饰符。之前提过，修饰符是由点开头的指令后缀来表示的。</p>
+    <ul id="app5">
+      <li v-for="item in items"><code>{{ item }}</code></li>
+    </ul>
+    <script>
+      new Vue({
+        el: "#app5",
+        data: {
+          items: ['.stop', '.prevent', '.capture', '.self', '.once', '.passive']
+        }
+      })
+    </script>
+    <p>
+      使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。
+      因此，用 <code>v-on:click.prevent.self</code> 会阻止所有的点击，
+      而 <code>v-on:click.self.prevent</code> 只会阻止对元素自身的点击。
+    </p>
+    <p>不像其它只能对原生的 DOM 事件起作用的修饰符，.once 修饰符还能被用到自定义的组件事件上。</p>
+    <p>
+      不要把 .passive 和 .prevent 一起使用，
+      因为 .prevent 将会被忽略，同时浏览器可能会向你展示一个警告。
+      请记住，.passive 会告诉浏览器你不想阻止事件的默认行为。
+    </p>
+  </div>
+  <hr/>
+
+
+  <div>
+    <h2>按键修饰符</h2>
+    <p>在监听键盘事件时，我们经常需要检查详细的按键。Vue 允许为 <code>v-on</code> 在监听键盘事件时添加按键修饰符：</p>
+    <div id="app6">
+      <!-- 只有在 `key` 是 `Enter` 时调用 `vm.doSomething()` -->
+      <input v-on:keyup.enter="doSomething6">
+    </div>
+    <script>
+      new Vue({
+        el: "#app6",
+        methods: {
+          doSomething6: function () {
+            alert('do something 6.')
+          }
+        }
+      })
+    </script>
+    <br/><br/>
+
+
+    <p>你可以直接将 <code>KeyboardEvent.key</code> 暴露的任意有效按键名转换为 kebab-case 来作为修饰符。</p>
+    <input v-on:keyup.page-down="onPageDown">
+    <p>在上述示例中，处理函数只会在 <code>$event.key</code> 等于 <code>PageDown</code> 时被调用。</p>
+  </div>
+  <hr/>
+
+
+  <div>
+    <h2>按键码</h2>
+    <p><code>keyCode</code> 的事件用法已经被废弃了并可能不会被最新的浏览器支持。</p>
+    <p>使用 <code>keyCode</code> 属性 也是允许的：</p>
+    <input v-on:keyup.13="submit">
+    <p>为了在必要的情况下支持旧浏览器，Vue 提供了绝大多数常用的按键码的别名:</p>
+    <p>
+      有一些按键 (<code>.esc</code> 以及所有的方向键) 在 IE9 中有不同的 <code>key</code> 值,
+      如果你想支持 IE9，这些内置的别名应该是首选。
+    </p>
+    <p>你还可以通过全局 config.keyCodes 对象<a href="https://cn.vuejs.org/v2/api/#keyCodes">自定义按键修饰符别名</a>：</p>
+    <script>
+      // 可以使用 `v-on:keyup.f1`
+      // Vue.config.keyCodes.f1 = 112
+    </script>
+  </div>
+  <hr/>
+
+
+  <div>
+    <!--2.1.0 新增-->
+    <h2>系统修饰键</h2>
+    <p>可以用如下修饰符来实现仅在按下相应按键时才触发鼠标或键盘事件的监听器。</p>
+    <ul>
+      <li><code>.ctrl</code></li>
+      <li><code>.alt</code></li>
+      <li><code>.shift</code></li>
+      <li><code>.meta</code></li>
+    </ul>
+
+
+    <div id="app7">
+      <!-- Alt + C -->
+      <input v-on:keyup.alt.67="doSomething7">
+      <br>
+      <!-- Shift + Click -->
+      <button v-on:click.shift="doSomething8">Do something 8</button>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app7",
+        methods: {
+          doSomething7: function () {
+            alert("do something 7")
+          },
+          doSomething8: function () {
+            alert("do something 8")
+          },
+        }
+      })
+    </script>
+    <p>
+      请注意修饰键与常规按键不同，在和 <code>keyup</code> 事件一起用时，事件触发时修饰键必须处于按下状态。
+      换句话说，只有在按住 <code>ctrl</code> 的情况下释放其它按键，才能触发 <code>keyup.ctrl</code>。
+      而单单释放 <code>ctrl</code> 也不会触发事件。如果你想要这样的行为，请为 <code>ctrl</code> 换用 <code>keyCode</code>：<code>keyup.17</code>。
+    </p>
+  </div>
+  <hr/>
+
+
+  <div>
+    <!--2.5.0 新增-->
+    <h2><code>.exact</code> 修饰符</h2>
+    <p><code>.exact</code> 修饰符允许你控制由精确的系统修饰符组合触发的事件。</p>
+
+    <div id="app8">
+      <!-- 即使 Alt 和 Shift 被一同按下时也会触发 -->
+      <button v-on:click.shift="onClickA">即使 Alt 和 Shift 被一同按下时也会触发</button>
+      <br>
+
+      <!-- 有且只有 Shift 被按下的时候才触发 -->
+      <button v-on:click.shift.exact="onClickB">有且只有 Shift 被按下的时候才触发</button>
+      <br>
+
+      <!-- 没有任何系统修饰符被按下的时候才触发 -->
+      <button v-on:click.exact="onClickC">没有任何系统修饰符被按下的时候才触发</button>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app8",
+        methods: {
+          onClickA: function () {
+            alert("onClick A")
+          },
+          onClickB: function () {
+            alert("onClick B")
+          },
+          onClickC: function () {
+            alert("onClick C")
+          },
+        }
+      })
+    </script>
+  </div>
+  <hr/>
+
+
+  <div>
+    <!--2.2.0 新增-->
+    <h2>鼠标按钮修饰符</h2>
+    <ul>
+      <li><code>.left</code></li>
+      <li><code>.right</code></li>
+      <li><code>.middle</code></li>
+    </ul>
+    <p>这些修饰符会限制处理函数仅响应特定的鼠标按钮。</p>
+
+    <h3>实例</h3>
+    <div id="app9">
+      <button @click.right="clickOnRight">鼠标右键点击</button>
+      <br/>
+      <button @click.left="clickOnLeft">鼠标左键点击</button>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app9",
+        methods: {
+          clickOnRight: function () {
+            alert("鼠标右键点击")
+          },
+          clickOnLeft: function () {
+            alert("鼠标左键点击")
+          },
+        }
+      })
+    </script>
+  </div>
+  <hr/>
+
+
+  <div>
+    <p>
+      你可能注意到这种事件监听的方式违背了关注点分离 (separation of concern) 这个长期以来的优良传统。
+      但不必担心，因为所有的 Vue.js 事件处理方法和表达式都严格绑定在当前视图的 ViewModel 上，
+      它不会导致任何维护上的困难。实际上，使用 <code>v-on</code> 有几个好处：
+    </p>
+
+    <ol>
+      <li>扫一眼 HTML 模板便能轻松定位在 JavaScript 代码里对应的方法。</li>
+      <li>因为你无须在 JavaScript 里手动绑定事件，你的 ViewModel 代码可以是非常纯粹的逻辑，和 DOM 完全解耦，更易于测试。</li>
+      <li>当一个 ViewModel 被销毁时，所有的事件处理器都会自动被删除。你无须担心如何清理它们。</li>
+    </ol>
+  </div>
+  <hr/>
+
+</body>
+</html>

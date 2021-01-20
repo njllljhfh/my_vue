@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>绑定 HTML Class</title>
+  <script src="../../vue.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="../../style_sheet/my_style.css">
+</head>
+<body>
+  <a href="https://cn.vuejs.org/v2/guide/class-and-style.html">绑定 HTML Class</a>
+  <hr/>
+
+
+  <div>
+    <h2>对象语法</h2>
+    <br/>
+
+
+    <div
+            id="app-1"
+            class="static"
+            v-bind:class="{ active: isActive, 'text-danger': hasError }"
+    >
+      <p>Hello Dragon!</p>
+    </div>
+    <script>
+      var app1 = new Vue({
+        el: "#app-1",
+        data: {
+          isActive: true,
+          hasError: false
+        }
+      })
+    </script>
+    <br/>
+
+
+    <div id="app2" v-bind:class="classObject">
+      <p>绑定的数据对象不必内联定义在模板里：</p>
+    </div>
+    <script>
+      var app2 = new Vue({
+        el: "#app2",
+        data: {
+          classObject: {
+            active: true,
+            'text-danger': false
+          }
+        }
+      })
+    </script>
+    <br/>
+
+
+    <div id="app3" v-bind:class="classObject">
+      <p>我们也可以在这里绑定一个返回对象的计算属性。这是一个常用且强大的模式：</p>
+    </div>
+    <script>
+      var app2 = new Vue({
+        el: "#app3",
+        data: {
+          isActive: true,
+          error: null
+        },
+        computed: {
+          classObject: function () {
+            return {
+              active: this.isActive && !this.error,
+              'text-danger': this.error && this.error.type === 'fatal'
+            }
+          }
+        }
+      })
+    </script>
+  </div>
+  <hr/>
+
+
+  <div>
+    <h2>数组语法</h2>
+    <br/>
+
+
+    <div id="app4" v-bind:class="[activeClass, errorClass]">
+      <p>我们可以把一个数组传给 v-bind:class，以应用一个 class 列表：</p>
+    </div>
+    <script>
+      var app4 = new Vue({
+        el: "#app4",
+        data: {
+          activeClass: 'active',
+          errorClass: 'text-danger'
+        }
+      })
+    </script>
+    <br/>
+
+
+    <div id="app5" v-bind:class="[isActive ? activeClass : '', errorClass]">
+      <p>如果你也想根据条件切换列表中的 class，可以用三元表达式：</p>
+      <p>这样写将始终添加 errorClass，但是只有在 isActive 是 truthy[1] 时才添加 activeClass。</p>
+    </div>
+    <script>
+      var app5 = new Vue({
+        el: "#app5",
+        data: {
+          isActive: true,
+          activeClass: 'active',
+          errorClass: 'text-danger'
+        }
+      })
+    </script>
+    <br/>
+
+
+    <div id="app6" v-bind:class="[{ active: isActive }, errorClass]">
+      <p>不过，当有多个条件 class 时这样写有些繁琐。所以在数组语法中也可以使用对象语法：</p>
+    </div>
+    <script>
+      var app6 = new Vue({
+        el: "#app6",
+        data: {
+          isActive: true,
+          errorClass: 'text-danger'
+        }
+      })
+    </script>
+    <br/>
+
+
+    <div id="app7" v-bind:class="[classObject, errorClass]">
+      <p>不过，当有多个条件 class 时这样写有些繁琐。所以在数组语法中也可以使用对象语法：</p>
+      <p>绑定的数据对象不必内联定义在模板里：</p>
+    </div>
+    <script>
+      var app7 = new Vue({
+        el: "#app7",
+        data: {
+          classObject: {
+            active: true,
+          },
+          errorClass: 'text-danger'
+        }
+      })
+    </script>
+    <br/>
+  </div>
+  <hr/>
+
+
+  <div>
+    <h2>用在组件上</h2>
+    <br/>
+
+
+    <!--必须将Vue的app挂载到DOM上，Vue组件在才起作用-->
+    <div id="app8">
+      <p>
+        当在一个自定义组件上使用 class property 时，这些 class 将被添加到该组件的根元素上面。
+        这个元素上已经存在的 class 不会被覆盖。
+      </p>
+      <!--HTML 将被渲染为：<p class="foo bar baz boo">Hi</p>-->
+      <my-component class="baz boo"></my-component>
+    </div>
+    <script>
+      Vue.component('my-component', {
+        template: '<p class="foo bar">Hi</p>'
+      });
+
+      // 必须将Vue的app挂载到DOM上，Vue组件在才起作用
+      var app8 = new Vue({
+        el: '#app8',
+      })
+    </script>
+    <br/>
+
+
+    <div id="app9">
+      <p>对于带数据绑定 class 也同样适用：</p>
+      <!--当 isActive 为 truthy 时，HTML 将被渲染成为：<p class="foo bar active text-danger">Hi</p>-->
+      <my-component v-bind:class="[classObject, errorClass]"></my-component>
+    </div>
+    <script>
+      var app9 = new Vue({
+        el: "#app9",
+        data: {
+          classObject: {
+            active: true,
+          },
+          errorClass: 'text-danger'
+        }
+      })
+    </script>
+    <br/>
+  </div>
+
+
+</body>
+<style>
+  .active {
+    background-color: #dcf4ff;
+  }
+</style>
+</html>

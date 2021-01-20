@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>绑定内联样式</title>
+  <script src="../../vue.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="../../style_sheet/my_style.css">
+</head>
+<body>
+  <a href="https://cn.vuejs.org/v2/guide/class-and-style.html#%E7%BB%91%E5%AE%9A%E5%86%85%E8%81%94%E6%A0%B7%E5%BC%8F">绑定内联样式</a>
+  <hr/>
+
+
+  <div>
+    <h2>对象语法</h2>
+
+
+    <!--<div id="app1" v-bind:style="{ color: activeColor, 'font-size': fontSize + 'px' }">Hello!</div>-->
+    <div id="app1">
+      <p>
+        v-bind:style 的对象语法十分直观——看着非常像 CSS，但其实是一个 JavaScript 对象。
+        CSS property 名可以用驼峰式 (camelCase) 或短横线分隔 (kebab-case，记得用引号括起来) 来命名：
+      </p>
+      <p v-bind:style="{ color: activeColor, 'font-size': fontSize + 'px', backgroundColor: isRed ? '#0000ff' : ''}">
+        Hello!
+      </p>
+    </div>
+    <script>
+      var app1 = new Vue({
+        el: "#app1",
+        data: {
+          activeColor: 'red',
+          fontSize: 30,
+          isRed: true
+        }
+      })
+    </script>
+    <br/><br>
+
+
+    <div id="app2">
+      <p>直接绑定到一个样式对象通常更好，这会让模板更清晰：</p>
+      <p>同样的，对象语法常常结合返回对象的计算属性使用。</p>
+      <p :style="styleObject">hello</p>
+    </div>
+    <script>
+      var app2 = new Vue({
+        el: "#app2",
+        data: {
+          styleObject: {
+            color: 'green',
+            fontSize: '20px'
+          }
+        }
+      })
+    </script>
+  </div>
+  <hr/>
+
+
+  <div>
+    <he>数组语法</he>
+    <p>v-bind:style 的数组语法可以将多个样式对象应用到同一个元素上：</p>
+    <div v-bind:style="[baseStyles, overridingStyles]"></div>
+  </div>
+  <hr/>
+
+
+  <div>
+    <h2>自动添加前缀</h2>
+    <p>
+      当 v-bind:style 使用需要添加浏览器引擎前缀的 CSS property 时，如 transform，Vue.js 会自动侦测并添加相应的前缀。
+    </p>
+  </div>
+  <hr/>
+
+
+  <div>
+    <h2>多重值</h2>
+  </div>
+  <hr/>
+
+</body>
+</html>

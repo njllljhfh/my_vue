@@ -2,6 +2,7 @@ pre {
     border-radius: 2px;
     position: relative;
 }
+
 pre code {
     overflow-x: auto;
     color: #525252;
@@ -11,6 +12,7 @@ pre code {
     line-height: 1.6rem;
     display: block;
 }
+
 pre code .hljs-tag,
 pre code .hljs-tag pre code .hljs-title,
 pre code .hljs-change,
@@ -19,6 +21,7 @@ pre code .hljs-flow,
 pre code .hljs-tex pre code .hljs-special {
     color: #2973b7;
 }
+
 pre code .hljs-symbol,
 pre code .hljs-symbol pre code .hljs-string,
 pre code .hljs-value,
@@ -48,24 +51,30 @@ pre code .hljs-tex pre code .hljs-command,
 pre code .hljs-prompt {
     color: #42b983;
 }
+
 pre code .hljs-function pre code .hljs-keyword,
 pre code .hljs-constant {
     color: #0092db;
 }
+
 pre code .hljs-keyword,
 pre code .hljs-attribute {
     color: #d63200;
 }
+
 pre code .hljs-number,
 pre code .hljs-literal {
     color: #a32eff;
 }
+
 pre code .hljs-class pre code .hljs-title {
     color: #fff;
 }
+
 pre code .hljs-title {
     color: #a6e22e;
 }
+
 pre code .hljs-tag pre code .hljs-value,
 pre code .hljs-comment,
 pre code .hljs-java pre code .hljs-annotation,
@@ -79,6 +88,7 @@ pre code .hljs-apache pre code .hljs-sqbracket,
 pre code .hljs-tex pre code .hljs-formula {
     color: #707070;
 }
+
 pre code .hljs-coffeescript pre code .hljs-javascript,
 pre code .hljs-javascript pre code .hljs-xml,
 pre code .hljs-tex pre code .hljs-formula,
@@ -88,6 +98,7 @@ pre code .hljs-xml pre code .hljs-css,
 pre code .hljs-xml pre code .hljs-cdata {
     opacity: 0.5;
 }
+
 pre code.hljs.html::before,
 pre code.hljs.js::before,
 pre code.hljs.bash::before,
@@ -104,15 +115,19 @@ pre code.hljs.css::before {
     height: 15px;
     font-weight: 600;
 }
+
 pre code.hljs.html::before {
     content: "HTML";
 }
+
 pre code.hljs.js::before {
     content: "JS";
 }
+
 pre code.hljs.bash::before {
     content: "Shell";
 }
+
 pre code.hljs.css::before {
     content: "CSS";
 }
@@ -126,10 +141,22 @@ pre {
     -webkit-font-smoothing: initial;
     -moz-osx-font-smoothing: initial;
 }
+
 code {
     color: #d63200;
     padding: 3px 5px;
     margin: 0 2px;
     border-radius: 2px;
     white-space: nowrap;
+}
+
+a {
+    color: #42b983;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+p {
+    width: 70%;
 }
